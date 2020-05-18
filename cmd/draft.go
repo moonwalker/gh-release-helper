@@ -3,9 +3,6 @@ package cmd
 import (
 	"context"
 	"log"
-	"os"
-	"os/exec"
-	"strings"
 	"time"
 
 	"github.com/google/go-github/github"
@@ -82,22 +79,4 @@ func createUpdateDraft() {
 			log.Fatal(err)
 		}
 	}
-}
-
-func gitlog() string {
-	tag := run("git", "describe", "--tags", "--abbrev=0")
-	return run("git", "log", "--pretty=format:- %H %s", tag+"...")
-}
-
-func run(name string, args ...string) string {
-	cmd := exec.Command(name, args...)
-	cmd.Env = os.Environ()
-
-	out, err := cmd.CombinedOutput()
-	res := strings.TrimSpace(string(out))
-	if err != nil {
-		log.Fatal(res)
-	}
-
-	return res
 }

@@ -24,7 +24,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&ghToken, "token", "$GITHUB_TOKEN", "GitHub access token")
 	rootCmd.PersistentFlags().StringVar(&ghOwner, "owner", "moonwalker", "GitHub owner org or user")
 	rootCmd.PersistentFlags().StringVar(&ghRepo, "repo", "", "GitHub repository")
-	rootCmd.MarkPersistentFlagRequired("repo")
 }
 
 func Execute(version, commit, date string) {
@@ -32,6 +31,10 @@ func Execute(version, commit, date string) {
 
 	if ghToken == "$GITHUB_TOKEN" {
 		ghToken = os.Getenv("GITHUB_TOKEN")
+	}
+
+	if len(ghRepo) == 0 {
+		ghRepo = gitrepo()
 	}
 
 	if err := rootCmd.Execute(); err != nil {
