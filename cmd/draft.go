@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -93,12 +92,6 @@ func gitlog() string {
 func run(name string, args ...string) string {
 	cmd := exec.Command(name, args...)
 	cmd.Env = os.Environ()
-
-	ex, err := os.Executable()
-	if err != nil {
-		log.Fatal(err)
-	}
-	cmd.Dir = filepath.Dir(ex)
 
 	out, err := cmd.CombinedOutput()
 	res := strings.TrimSpace(string(out))
