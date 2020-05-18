@@ -41,21 +41,19 @@ func createUpdateDraft() {
 	tc := oauth2.NewClient(ctx, ts)
 	client := github.NewClient(tc)
 
-	rels, _, err := client.Repositories.ListReleases(ctx, ghOwner, ghRepo, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	var err error
 	var rel *github.RepositoryRelease
-	for _, r := range rels {
-		if *r.Draft {
-			rel = r
-			break
+	rels, _, _ := client.Repositories.ListReleases(ctx, ghOwner, ghRepo, nil)
+	if rels != nil {
+		for _, r := range rels {
+			if *r.Draft {
+				rel = r
+				break
+			}
 		}
 	}
 
 	releaseBody := gitlog()
-
 	if rel != nil {
 		rel.Name = &relName
 		rel.Body = &releaseBody

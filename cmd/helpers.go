@@ -8,8 +8,8 @@ import (
 )
 
 func gitrepo() string {
-	p := run("git", "rev-parse", "--show-toplevel")
-	return run("basename", p)
+	p := run("git", "config", "--get", "remote.origin.url")
+	return run("basename", "-s", ".git", p)
 }
 
 func gitlog() string {

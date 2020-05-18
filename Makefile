@@ -1,4 +1,4 @@
-VERSION=v0.2.0
+VERSION=v0.3.0
 
 reltest:
 	@goreleaser --snapshot --skip-publish --rm-dist
