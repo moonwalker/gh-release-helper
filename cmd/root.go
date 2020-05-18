@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -31,6 +32,10 @@ func Execute(version, commit, date string) {
 
 	if ghToken == "$GITHUB_TOKEN" {
 		ghToken = os.Getenv("GITHUB_TOKEN")
+	}
+
+	if len(ghToken) == 0 {
+		log.Fatal("GitHub token not specified")
 	}
 
 	if len(ghRepo) == 0 {

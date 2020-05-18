@@ -60,7 +60,7 @@ func createUpdateDraft() {
 		rel.CreatedAt = &github.Timestamp{time.Now()}
 		_, _, err = client.Repositories.EditRelease(ctx, ghOwner, ghRepo, *rel.ID, rel)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Failed to edit release", err)
 		}
 	} else {
 		tagName := ""
@@ -74,7 +74,7 @@ func createUpdateDraft() {
 		}
 		_, _, err = client.Repositories.CreateRelease(ctx, ghOwner, ghRepo, rel)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Failed to create release", err)
 		}
 	}
 }
